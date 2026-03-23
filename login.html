@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 - 西兰卡普文创平台</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* 登录页专属样式 */
+    .login-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    
+    .login-card {
+      background-color: var(--xk-white);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border: 1px solid var(--xk-yellow);
+    }
+    
+    .login-title {
+      text-align: center;
+      font-size: 24px;
+      color: var(--xk-red);
+      margin-bottom: 20px;
+      font-family: "SimHei", sans-serif;
+    }
+    
+    .form-switch {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    
+    .form-switch span {
+      color: var(--xk-red);
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .login-tip {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <div class="header">
+    <h1>西兰卡普文创平台</h1>
+  </div>
+  
+  <!-- 登录容器 -->
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-title">用户登录</div>
+      
+      <!-- 登录表单 -->
+      <div id="loginForm" class="form-box" style="margin-bottom: 0;">
+        <div class="form-item">
+          <label class="label">用户名</label>
+          <input type="text" id="loginUsername" class="input" placeholder="请输入用户名">
+        </div>
+        
+        <div class="form-item">
+          <label class="label">密码</label>
+          <input type="password" id="loginPassword" class="input" placeholder="请输入密码">
+        </div>
+        
+        <button id="loginBtn" class="btn primary-btn" style="margin-top: 10px;">登录</button>
+      </div>
+      
+      <!-- 注册表单（默认隐藏） -->
+      <div id="registerForm" class="form-box" style="margin-bottom: 0; display: none;">
+        <div class="form-item">
+          <label class="label">用户名</label>
+          <input type="text" id="regUsername" class="input" placeholder="请设置用户名">
+        </div>
+        
+        <div class="form-item">
+          <label class="label">密码</label>
+          <input type="password" id="regPassword" class="input" placeholder="请设置密码（不少于6位）">
+        </div>
+        
+        <div class="form-item">
+          <label class="label">确认密码</label>
+          <input type="password" id="regConfirmPwd" class="input" placeholder="请再次输入密码">
+        </div>
+        
+        <button id="registerBtn" class="btn primary-btn" style="margin-top: 10px;">注册</button>
+      </div>
+      
+      <div class="form-switch">
+        <span id="switchToRegister">没有账号？点击注册</span>
+        <span id="switchToLogin" style="display: none;">已有账号？点击登录</span>
+      </div>
+      
+      <div class="login-tip">
+        测试账号：test / 密码：123456
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // 切换登录/注册表单
+    document.getElementById('switchToRegister').onclick = function() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('registerForm').style.display = 'block';
+      this.style.display = 'none';
+      document.getElementById('switchToLogin').style.display = 'inline';
+    };
+    
+    document.getElementById('switchToLogin').onclick = function() {
+      document.getElementById('registerForm').style.display = 'none';
+      document.getElementById('loginForm').style.display = 'block';
+      this.style.display = 'none';
+      document.getElementById('switchToRegister').style.display = 'inline';
+    };
+    
+    // 登录按钮事件
+    document.getElementById('loginBtn').onclick = function() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      
+      if (!username) {
+        showToast('请输入用户名');
+        return;
+      }
+      
+      if (!password) {
+        showToast('请输入密码');
+        return;
+      }
+      
+      // 调用登录函数
+      login(username, password);
+    };
+    
+    // 注册按钮事件
+    document.getElementById('registerBtn').onclick = function() {
+      const username = document.getElementById('regUsername').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+      const confirmPwd = document.getElementById('regConfirmPwd').value.trim();
+      
+      if (!username) {
+        showToast('请设置用户名');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showToast('密码长度不能少于6位');
+        return;
+      }
+      
+      if (password !== confirmPwd) {
+        showToast('两次输入的密码不一致');
+        return;
+      }
+      
+      // 调用注册函数
+      register(username, password);
+    };
+  </script>
+</body>
+</html>

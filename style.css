@@ -1,0 +1,547 @@
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Microsoft Yahei", sans-serif;
+}
+
+/* 西兰卡普花纹背景定义 */
+body {
+  background-color: #f8f3e9;
+  min-height: 100vh;
+  padding-bottom: 60px;
+  /* 西兰卡普暗纹背景 */
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm2 2v16h16V2H2zm8 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4z' fill='%23b32424' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* 西兰卡普主题色 */
+:root {
+  --xk-red: #b32424;
+  --xk-yellow: #e6c885;
+  --xk-blue: #2a558c;
+  --xk-green: #4a7c59;
+  --xk-bg: #f8f3e9;
+  --xk-white: #ffffff;
+}
+
+/* 顶部导航栏（西兰卡普花纹边框） */
+.header {
+  background-color: var(--xk-red);
+  color: white;
+  padding: 16px 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  /* 西兰卡普花纹下边框 */
+  border-bottom: 4px solid;
+  border-image: linear-gradient(90deg, var(--xk-yellow), var(--xk-red), var(--xk-yellow)) 1;
+  box-shadow: 0 2px 10px rgba(179, 36, 36, 0.2);
+}
+
+.header h1 {
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* 容器 */
+.container {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 西兰卡普标题模块（带花纹装饰） */
+.title-box {
+  margin: 30px 0 20px;
+  position: relative;
+}
+
+.title-box::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 8px;
+  height: 24px;
+  background-color: var(--xk-red);
+  border-radius: 4px;
+}
+
+.main-title {
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 15px;
+  font-family: "SimHei", sans-serif;
+}
+
+.sub-title {
+  font-size: 22px;
+  color: var(--xk-red);
+  margin-left: 10px;
+  font-family: "SimHei", sans-serif;
+}
+
+.divider {
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--xk-red), var(--xk-yellow));
+  margin: 10px 0 20px 15px;
+  border-radius: 3px;
+}
+
+.section-desc {
+  font-size: 14px;
+  color: #666;
+  margin-left: 25px;
+  font-style: italic;
+}
+
+/* 西兰卡普作品卡片（带花纹边框） */
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.product-item {
+  background-color: var(--xk-white);
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: all 0.3s;
+  /* 西兰卡普花纹边框 */
+  border: 1px solid var(--xk-yellow);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10h20v20H10V10zm5 5h10v10H15V15z' fill='%23e6c885' fill-opacity='0.2'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+.product-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(179, 36, 36, 0.1);
+  border-color: var(--xk-red);
+}
+
+.product-card {
+  display: flex;
+  align-items: center;
+}
+
+.product-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 15px;
+  border: 2px solid var(--xk-yellow);
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+  font-family: "SimHei", sans-serif;
+}
+
+/* 不同纹样类型不同标签色 */
+.product-tag {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.tag-四十八勾 {
+  background-color: rgba(179, 36, 36, 0.1);
+  color: var(--xk-red);
+}
+
+.tag-阳雀花 {
+  background-color: rgba(74, 124, 89, 0.1);
+  color: var(--xk-green);
+}
+
+.tag-岩墙花 {
+  background-color: rgba(42, 85, 140, 0.1);
+  color: var(--xk-blue);
+}
+
+.tag-椅子花 {
+  background-color: rgba(230, 200, 133, 0.1);
+  color: #8a6d3b;
+}
+
+.tag-其他 {
+  background-color: rgba(102, 102, 102, 0.1);
+  color: #666;
+}
+
+.product-desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-author {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 空状态提示（带西兰卡普图标） */
+.empty-tip {
+  text-align: center;
+  padding: 50px 0;
+  font-size: 16px;
+  color: #999;
+}
+
+.empty-tip::before {
+  content: "🎨";
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* 发布页样式（西兰卡普风格） */
+.upload-box {
+  width: 100%;
+  height: 200px;
+  background-color: var(--xk-white);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 2px dashed var(--xk-yellow);
+  transition: border-color 0.3s;
+}
+
+.upload-box:hover {
+  border-color: var(--xk-red);
+}
+
+.upload-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #999;
+}
+
+.upload-tip .icon {
+  font-size: 40px;
+  color: var(--xk-red);
+  margin-bottom: 5px;
+}
+
+.form-box {
+  background-color: var(--xk-white);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid var(--xk-yellow);
+}
+
+.form-item {
+  margin-bottom: 20px;
+}
+
+.form-item:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+  font-weight: 500;
+  font-family: "SimHei", sans-serif;
+}
+
+.input, .textarea, .select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--xk-yellow);
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fafafa;
+  transition: border-color 0.3s;
+}
+
+.input:focus, .textarea:focus, .select:focus {
+  outline: none;
+  border-color: var(--xk-red);
+  box-shadow: 0 0 0 2px rgba(179, 36, 36, 0.1);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+/* 按钮样式（西兰卡普渐变） */
+.btn {
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: "SimHei", sans-serif;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--xk-red), #9a1f1f);
+  color: white;
+  box-shadow: 0 2px 5px rgba(179, 36, 36, 0.2);
+}
+
+.primary-btn:hover {
+  background: linear-gradient(135deg, #9a1f1f, var(--xk-red));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(179, 36, 36, 0.3);
+}
+
+.primary-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 详情页样式 */
+.detail-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 3px solid var(--xk-yellow);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.info-box {
+  background-color: var(--xk-white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid var(--xk-yellow);
+}
+
+.info-item {
+  margin-bottom: 15px;
+  display: flex;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  min-width: 80px;
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 16px;
+  color: #333;
+  flex: 1;
+}
+
+/* 个人中心样式 */
+.profile-card {
+  background-color: var(--xk-white);
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid var(--xk-yellow);
+  position: relative;
+}
+
+.profile-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, var(--xk-red), var(--xk-yellow), var(--xk-red));
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  object-fit: cover;
+  border: 3px solid var(--xk-yellow);
+}
+
+.nickname {
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+  font-family: "SimHei", sans-serif;
+}
+
+.publish-btn {
+  margin: 20px 0;
+}
+
+.my-product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.my-product-item {
+  width: calc(50% - 7.5px);
+  background-color: var(--xk-white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid var(--xk-yellow);
+  transition: all 0.3s;
+}
+
+.my-product-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--xk-red);
+  box-shadow: 0 5px 15px rgba(179, 36, 36, 0.1);
+}
+
+.my-product-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--xk-yellow);
+}
+
+.my-product-name {
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "SimHei", sans-serif;
+}
+
+/* 底部导航（西兰卡普风格） */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--xk-white);
+  display: flex;
+  padding: 8px 0;
+  border-top: 2px solid var(--xk-yellow);
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  color: #666;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  color: var(--xk-red);
+}
+
+.tab-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.tab-text {
+  font-size: 12px;
+  font-family: "SimHei", sans-serif;
+}
+
+/* 操作按钮组 */
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-group .btn {
+  flex: 1;
+}
+
+.secondary-btn {
+  background-color: var(--xk-white);
+  color: var(--xk-red);
+  border: 1px solid var(--xk-red);
+}
+
+.secondary-btn:hover {
+  background-color: #fef5f5;
+}
+
+/* 西兰卡普文化小贴士 */
+.culture-tip {
+  background-color: rgba(230, 200, 133, 0.1);
+  border-left: 4px solid var(--xk-yellow);
+  padding: 10px 15px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.culture-tip p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
