@@ -9,7 +9,7 @@ const defaultProducts = [
     type: "四十八勾",
     desc: "四十八勾是西兰卡普最经典的纹样之一，由四十八个勾形图案组成，寓意四季平安、八方来财，是土家族婚嫁必备的传统饰品。",
     // 真实四十八勾纹样图
-    imgUrl: "https://picsum.photos/seed/xksijigou/400/400?text=四十八勾西兰卡普",
+    imgUrl: "https://img.scpo.cn/preview.axd/8652c987-b1e3-4d00-b1dc-25855d64260e?width=800&height=700&mode=max?text=四十八勾西兰卡普",
     author: "土家非遗传承人",
     authorUsername: "master",
     createTime: 1736832000000
