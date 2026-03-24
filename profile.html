@@ -7,41 +7,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 顶部导航 -->
   <div class="header">
-    <h1>我的</h1>
+    <h1>我的文创作品</h1>
   </div>
-  
-  <!-- 主要内容 -->
+
   <div class="container">
-    <!-- 用户信息 -->
     <div class="profile-card">
-      <img class="avatar" src="https://picsum.photos/200/200" alt="头像">
-      <div class="nickname">游客</div>
+      <img id="userAvatar" class="avatar" src="">
+      <div id="userNickname" class="nickname"></div>
+      <button class="btn secondary-btn" id="logoutBtn" style="margin-top:12px;width:100px;">退出登录</button>
     </div>
-    
-    <!-- 我的发布 -->
+
     <div class="title-box">
       <span class="main-title">我发布的文创</span>
       <div class="divider"></div>
     </div>
-    
-    <!-- 发布按钮 -->
+
     <button id="goPublishBtn" class="btn primary-btn publish-btn">+ 分享新文创</button>
-    
-    <!-- 我的作品列表 -->
+
     <div id="myProductList" class="my-product-list"></div>
   </div>
-  
-  <!-- 底部导航 -->
+
   <div class="tab-bar">
     <a href="index.html" class="tab-item">
-      <span class="tab-icon">🏠</span>
-      <span class="tab-text">首页</span>
+      <span class="icon">🏠</span>
+      <span>首页</span>
     </a>
     <a href="profile.html" class="tab-item active">
-      <span class="tab-icon">👤</span>
-      <span class="tab-text">我的</span>
+      <span class="icon">👤</span>
+      <span>我的</span>
     </a>
   </div>
 

@@ -3,46 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的 - 西兰卡普文创平台</title>
+  <title>发布文创 - 西兰卡普</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 顶部导航 -->
   <div class="header">
-    <h1>我的文创作品</h1>
+    <h1>发布新文创作品</h1>
   </div>
-  
-  <!-- 主要内容 -->
+
   <div class="container">
-    <!-- 用户信息 -->
-    <div class="profile-card">
-      <img id="userAvatar" class="avatar" src="" alt="用户头像">
-      <div id="userNickname" class="nickname"></div>
-      <button id="logoutBtn" class="btn secondary-btn" style="width: 100px; margin-top: 15px;">退出登录</button>
+    <div class="form-box">
+      <div class="form-item">
+        <label class="label">作品名称</label>
+        <input type="text" id="productName" class="input" placeholder="请输入作品名称">
+      </div>
+
+      <div class="form-item">
+        <label class="label">纹样类型</label>
+        <select id="patternType" class="input">
+          <option value="">请选择纹样</option>
+          <option value="四十八勾">四十八勾</option>
+          <option value="阳雀花">阳雀花</option>
+          <option value="岩墙花">岩墙花</option>
+          <option value="椅子花">椅子花</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+
+      <div class="form-item">
+        <label class="label">作品描述</label>
+        <textarea id="productDesc" class="input" rows="4" placeholder="介绍作品寓意、工艺等"></textarea>
+      </div>
+
+      <div class="form-item">
+        <label class="label">上传图片</label>
+        <input type="file" id="imgUpload" accept="image/*">
+        <img id="imgPreview" style="width:100%;max-width:300px;margin-top:10px;border-radius:8px;display:none;">
+        <div id="uploadTip" style="color:#999;font-size:12px;margin-top:6px;">请选择图片上传</div>
+      </div>
+
+      <button id="publishBtn" class="btn primary-btn">发布作品</button>
     </div>
-    
-    <!-- 我的发布 -->
-    <div class="title-box">
-      <span class="main-title">我发布的文创</span>
-      <div class="divider"></div>
-    </div>
-    
-    <!-- 发布按钮 -->
-    <button id="goPublishBtn" class="btn primary-btn publish-btn">+ 分享新文创</button>
-    
-    <!-- 我的作品列表 -->
-    <div id="myProductList" class="my-product-list"></div>
   </div>
-  
-  <!-- 底部导航 -->
+
   <div class="tab-bar">
     <a href="index.html" class="tab-item">
-      <span class="tab-icon">🏠</span>
-      <span class="tab-text">首页</span>
+      <span class="icon">🏠</span>
+      <span>首页</span>
     </a>
-    <a href="profile.html" class="tab-item active">
-      <span class="tab-icon">👤</span>
-      <span class="tab-text">我的</span>
+    <a href="profile.html" class="tab-item">
+      <span class="icon">👤</span>
+      <span>我的</span>
     </a>
   </div>
 
