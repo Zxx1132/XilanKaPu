@@ -1,16 +1,20 @@
+// ==============================================
+// 西兰卡普文创平台 —— 已部署 Vercel 后端版
+// 所有人打开都能看到作品，无数量限制
+// ==============================================
+
+const API = "https://xilankapu-api.vercel.app/api";
+
 let users = JSON.parse(localStorage.getItem('xilankapu_users')) || [
   { username: 'test', password: '123456', nickname: '土家文化爱好者', avatar: "" }
 ];
 
-const defaultProducts = [];
-let globalProducts = JSON.parse(localStorage.getItem('xilankapu_global_products')) || defaultProducts;
-let productData = globalProducts;
 let currentUser = JSON.parse(localStorage.getItem('xilankapu_current_user')) || null;
+let productData = [];
 
-document.addEventListener('DOMContentLoaded', function () {
-  setTimeout(() => {
+document.addEventListener('DOMContentLoaded', async function () {
+  setTimeout(async () => {
     const path = window.location.pathname;
-
     if (!path.includes('login.html') && !currentUser) {
       window.location.href = 'login.html';
       return;
@@ -20,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) logoutBtn.onclick = logout;
+
+    // 从云端加载所有作品
+    await fetchProducts();
 
     if (path.includes('index.html') || path.endsWith('/')) {
       loadAllProducts();
@@ -41,6 +48,64 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }, 200);
 });
+
+// 从云端获取作品（所有人都能看到）
+async function fetchProducts() {
+  try {
+    const res = await fetch(API + "/products");
+    const data = await res.json();
+    productData = data.list || [];
+  } catch (e) {
+    productData = [];
+  }
+}
+
+// 发布作品到云端
+async function publishProduct() {
+  const name = document.getElementById('productName').value.trim();
+  const type = document.getElementById('patternType').value;
+  const desc = document.getElementById('productDesc').value.trim();
+  const img = document.getElementById('imgPreview');
+
+  if (!name || !type || !img.src || img.src === '') {
+    showToast('请完善信息并上传图片');
+    return;
+  }
+
+  const newP = {
+    id: Date.now().toString(),
+    name, type, desc,
+    imgUrl: img.src,
+    author: currentUser.nickname,
+    authorUsername: currentUser.username,
+    createTime: Date.now()
+  };
+
+  await fetch(API + "/products", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newP)
+  });
+
+  showToast('发布成功！全世界都能看到你的作品！');
+  setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+}
+
+// 删除云端作品
+async function deleteProduct(id) {
+  if (!confirm('确定要删除该作品吗？删除后无法恢复！')) return;
+  await fetch(API + "/delete", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id })
+  });
+  showToast('删除成功');
+  window.location.href = 'profile.html';
+}
+
+// ==========================
+// 以下是原有功能（登录、注册、页面渲染）
+// ==========================
 
 function register(username, password, confirmPwd) {
   if (!username || password.length < 6 || password !== confirmPwd) {
@@ -79,7 +144,7 @@ function logout() {
 function updateUserInfoDisplay() {
   const a = document.getElementById('userAvatar');
   const n = document.getElementById('userNickname');
-  if (a) a.src = currentUser.avatar;
+  if (a) a.src = currentUser.avatar || '';
   if (n) n.textContent = currentUser.nickname;
 }
 
@@ -87,16 +152,14 @@ function loadAllProducts() {
   const list = document.getElementById('productList');
   if (!list) return;
   list.innerHTML = '';
-
   if (productData.length === 0) {
     list.innerHTML = '<div style="text-align:center;padding:50px 0;color:#999;">暂无作品，快来发布第一个吧～</div>';
     return;
   }
-
   productData.forEach(p => {
     const item = document.createElement('div');
     item.className = 'product-item';
-    const mine = p.authorUsername === currentUser?.username;
+    const mine = currentUser && p.authorUsername === currentUser.username;
     item.innerHTML = `
       <img class="product-img" src="${p.imgUrl}">
       <div class="product-info">
@@ -115,15 +178,13 @@ function loadAllProducts() {
 
 function loadMyProducts() {
   const myList = document.getElementById('myProductList');
-  if (!myList) return;
+  if (!myList || !currentUser) return;
   const mine = productData.filter(p => p.authorUsername === currentUser.username);
   myList.innerHTML = '';
-
   if (mine.length === 0) {
     myList.innerHTML = '<div style="grid-column:1/3;text-align:center;padding:20px;color:#999;">暂无作品</div>';
     return;
   }
-
   mine.forEach(p => {
     const item = document.createElement('div');
     item.className = 'my-product-item';
@@ -145,11 +206,11 @@ function loadProductDetail() {
     window.history.back();
     return;
   }
-  const mine = p.authorUsername === currentUser.username;
+  const mine = currentUser && p.authorUsername === currentUser.username;
 
   c.innerHTML = `
     <img class="detail-img" src="${p.imgUrl}" style="width:100%;border-radius:12px;margin-bottom:16px;">
-    <div class="info-box" style="background:white;padding:20px;border-radius:12px;">
+    <div class="info-box">
       <div style="font-size:22px;font-weight:bold;margin-bottom:10px;">${p.name}</div>
       <div style="display:inline-block;background:#f7d7a8;color:#900;padding:4px 8px;border-radius:6px;margin-bottom:12px;">${p.type}</div>
       <div style="margin-bottom:8px;"><strong>作品寓意：</strong>${p.desc}</div>
@@ -158,42 +219,8 @@ function loadProductDetail() {
     <div class="btn-group">
       <button class="btn secondary-btn" onclick="collectProduct()">收藏</button>
       <button class="btn primary-btn" onclick="shareProduct()">分享</button>
-      ${mine ? `<button class="btn secondary-btn" style="background:#e53935;color:white;" onclick="deleteProduct('${p.id}')">删除作品</button>` : ''}
+      ${mine ? `<button class="btn primary-btn" style="background:#e53935" onclick="deleteProduct('${p.id}')">删除作品</button>` : ''}
     </div>`;
-}
-
-function publishProduct() {
-  const name = document.getElementById('productName').value.trim();
-  const type = document.getElementById('patternType').value;
-  const desc = document.getElementById('productDesc').value.trim();
-  const img = document.getElementById('imgPreview');
-
-  if (!name || !type || !img.src || img.src === '') {
-    showToast('请完善信息并上传图片');
-    return;
-  }
-
-  const newP = {
-    id: Date.now().toString(),
-    name, type, desc,
-    imgUrl: img.src,
-    author: currentUser.nickname,
-    authorUsername: currentUser.username,
-    createTime: Date.now()
-  };
-
-  productData.unshift(newP);
-  localStorage.setItem('xilankapu_global_products', JSON.stringify(productData));
-  showToast('发布成功！');
-  setTimeout(() => { window.location.href = 'index.html'; }, 1000);
-}
-
-function deleteProduct(id) {
-  if (!confirm('确定要删除该作品吗？删除后无法恢复！')) return;
-  productData = productData.filter(item => item.id !== id);
-  localStorage.setItem('xilankapu_global_products', JSON.stringify(productData));
-  showToast('删除成功！');
-  window.location.href = 'profile.html';
 }
 
 function previewImage(e) {
@@ -209,13 +236,8 @@ function previewImage(e) {
   reader.readAsDataURL(file);
 }
 
-function collectProduct() {
-  showToast('收藏成功！');
-}
-
-function shareProduct() {
-  showToast('分享成功！');
-}
+function collectProduct() { showToast('收藏成功！'); }
+function shareProduct() { showToast('分享成功！'); }
 
 function switchForm() {
   let loginForm = document.getElementById('loginForm');
