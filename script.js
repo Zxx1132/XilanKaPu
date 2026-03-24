@@ -2,10 +2,11 @@ let users = JSON.parse(localStorage.getItem('xilankapu_users')) || [
   { username: 'test', password: '123456', nickname: '土家文化爱好者', avatar: "" }
 ];
 
-// 🔥 这里已经清空！主页完全空白！
+// 🔥 全局共享作品库（所有人共用）
 const defaultProducts = [];
+let globalProducts = JSON.parse(localStorage.getItem('xilankapu_global_products')) || defaultProducts;
+let productData = globalProducts;
 
-let productData = JSON.parse(localStorage.getItem('xilankapu_products')) || defaultProducts;
 let currentUser = JSON.parse(localStorage.getItem('xilankapu_current_user')) || null;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -74,6 +75,10 @@ function loadAllProducts() {
   const list = document.getElementById('productList');
   if (!list) return;
   list.innerHTML = '';
+  if (productData.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:50px 0;color:#999;">暂无作品，快来发布第一个吧～</div>';
+    return;
+  }
   productData.forEach(p => {
     const item = document.createElement('div');
     item.className = 'product-item';
@@ -136,7 +141,7 @@ function publishProduct() {
   const type = document.getElementById('patternType').value;
   const desc = document.getElementById('productDesc').value.trim();
   const img = document.getElementById('imgPreview');
-  if (!name || !type || !img.src || img.src.includes('placeholder')) {
+  if (!name || !type || !img.src || img.src === '') {
     showToast('请完善信息并上传图片');
     return;
   }
@@ -149,7 +154,8 @@ function publishProduct() {
     createTime: Date.now()
   };
   productData.unshift(newP);
-  localStorage.setItem('xilankapu_products', JSON.stringify(productData));
+  // 🔥 保存到全局共享存储
+  localStorage.setItem('xilankapu_global_products', JSON.stringify(productData));
   showToast('发布成功！');
   setTimeout(() => navigateTo('index.html'), 1000);
 }
@@ -157,7 +163,8 @@ function publishProduct() {
 function deleteProduct(id) {
   if (!confirm('确定要删除该作品吗？删除后无法恢复！')) return;
   productData = productData.filter(item => item.id !== id);
-  localStorage.setItem('xilankapu_products', JSON.stringify(productData));
+  // 🔥 同步更新全局共享存储
+  localStorage.setItem('xilankapu_global_products', JSON.stringify(productData));
   showToast('删除成功！');
   navigateTo('profile.html');
 }
