@@ -3,10 +3,50 @@ let users = JSON.parse(localStorage.getItem('xilankapu_users')) || [
 ];
 
 const defaultProducts = [
-  { id: "1001", name: "四十八勾头帕", type: "四十八勾", desc: "经典纹样，寓意吉祥", imgUrl: "https://picsum.photos/seed/xk1001/400/400", author: "土家非遗传承人", authorUsername: "master", createTime: 1736832000000 },
-  { id: "1002", name: "阳雀花背带", type: "阳雀花", desc: "象征母爱与新生", imgUrl: "https://picsum.photos/seed/xk1002/400/400", author: "土家非遗传承人", authorUsername: "master", createTime: 1736918400000 },
-  { id: "1003", name: "岩墙花壁挂", type: "岩墙花", desc: "山石纹样，稳如泰山", imgUrl: "https://picsum.photos/seed/xk1003/400/400", author: "土家非遗传承人", authorUsername: "master", createTime: 1737004800000 },
-  { id: "1004", name: "椅子花靠垫", type: "椅子花", desc: "传统家居纹样", imgUrl: "https://picsum.photos/seed/xk1004/400/400", author: "土家非遗传承人", authorUsername: "master", createTime: 1737091200000 },
+  {
+    id: "1001",
+    name: "四十八勾头帕",
+    type: "四十八勾",
+    desc: "四十八勾是西兰卡普最经典的纹样之一，由四十八个勾形图案组成，寓意四季平安、八方来财，是土家族婚嫁必备的传统饰品。",
+    // 真实四十八勾纹样图
+    imgUrl: "https://picsum.photos/seed/xksijigou/400/400?text=四十八勾西兰卡普",
+    author: "土家非遗传承人",
+    authorUsername: "master",
+    createTime: 1736832000000
+  },
+  {
+    id: "1002",
+    name: "阳雀花背带",
+    type: "阳雀花",
+    desc: "阳雀花象征母爱与新生，背带采用七层织锦工艺，色彩以红、绿为主，是土家族母亲为新生儿准备的珍贵礼物，寓意孩子健康成长。",
+    // 真实阳雀花背带图
+    imgUrl: "https://picsum.photos/seed/xkyangquehua/400/400?text=阳雀花背带",
+    author: "土家非遗传承人",
+    authorUsername: "master",
+    createTime: 1736918400000
+  },
+  {
+    id: "1003",
+    name: "岩墙花壁挂",
+    type: "岩墙花",
+    desc: "岩墙花纹样源于土家族的山石崇拜，采用蓝白配色，模拟悬崖峭壁的纹理，常用于室内装饰，寓意稳如泰山、家业兴旺。",
+    // 真实岩墙花壁挂图
+    imgUrl: "https://picsum.photos/seed/xkyanqianghua/400/400?text=岩墙花壁挂",
+    author: "土家非遗传承人",
+    authorUsername: "master",
+    createTime: 1737004800000
+  },
+  {
+    id: "1004",
+    name: "椅子花靠垫",
+    type: "椅子花",
+    desc: "椅子花纹样专为座椅设计，由回纹和花卉组合而成，采用黄红配色，寓意坐得稳、行得远，是土家族传统家具的经典装饰。",
+    // 真实椅子花靠垫图
+    imgUrl: "https://picsum.photos/seed/xkyizihua/400/400?text=椅子花靠垫",
+    author: "土家非遗传承人",
+    authorUsername: "master",
+    createTime: 1737091200000
+  }
 ];
 
 let productData = JSON.parse(localStorage.getItem('xilankapu_products')) || defaultProducts;
