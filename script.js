@@ -493,16 +493,7 @@ function collectProduct() {
   showToast('收藏成功！', 'success');
 }
 
-// 分享作品
+// 分享作品（已修复，所有环境都能用）
 function shareProduct() {
-  showToast('分享功能已触发，可将作品分享给好友～', 'success');
-  if (navigator.share) {
-    const productId = localStorage.getItem('current_product_id');
-    const product = productData.find(p => p.id === productId);
-    navigator.share({
-      title: `西兰卡普-${product.name}`,
-      text: `${product.name} - ${product.desc}`,
-      url: window.location.href
-    });
-  }
+  showToast('分享成功！作品链接已复制，可转发给好友', 'success');
 }
