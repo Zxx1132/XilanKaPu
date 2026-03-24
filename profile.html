@@ -3,29 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的 - 西兰卡普</title>
+  <title>个人中心 - 西兰卡普</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="header">
-    <h1>我的文创作品</h1>
+    <h1>个人中心</h1>
   </div>
 
   <div class="container">
     <div class="profile-card">
-      <img id="userAvatar" class="avatar" src="">
+      <img id="userAvatar" class="avatar">
       <div id="userNickname" class="nickname"></div>
-      <button class="btn secondary-btn" id="logoutBtn" style="margin-top:12px;width:100px;">退出登录</button>
+      <button class="btn secondary-btn" id="logoutBtn">退出登录</button>
     </div>
 
     <div class="title-box">
-      <span class="main-title">我发布的文创</span>
+      <span class="main-title">我的发布</span>
       <div class="divider"></div>
     </div>
 
-    <button id="goPublishBtn" class="btn primary-btn publish-btn">+ 分享新文创</button>
-
-    <div id="myProductList" class="my-product-list"></div>
+    <button class="btn primary-btn" id="goPublishBtn">发布新作品</button>
+    <div id="myProductList" class="my-product-list" style="margin-top:20px;"></div>
   </div>
 
   <div class="tab-bar">

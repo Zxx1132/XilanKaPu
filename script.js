@@ -2,35 +2,44 @@ let users = JSON.parse(localStorage.getItem('xilankapu_users')) || [
   { username: 'test', password: '123456', nickname: '土家文化爱好者', avatar: "" }
 ];
 
-// 🔥 全局共享作品库（所有人共用）
 const defaultProducts = [];
 let globalProducts = JSON.parse(localStorage.getItem('xilankapu_global_products')) || defaultProducts;
 let productData = globalProducts;
-
 let currentUser = JSON.parse(localStorage.getItem('xilankapu_current_user')) || null;
 
 document.addEventListener('DOMContentLoaded', function () {
-  const path = window.location.pathname;
-  if (!path.includes('login.html') && !currentUser) { navigateTo('login.html'); return; }
-  if (currentUser) updateUserInfoDisplay();
-
-  const logoutBtn = document.getElementById('logoutBtn');
-  if (logoutBtn) logoutBtn.onclick = logout;
-
-  if (path.includes('index.html')) loadAllProducts();
-  else if (path.includes('profile.html')) loadMyProducts();
-  else if (path.includes('detail.html')) loadProductDetail();
-
-  const publishBtn = document.getElementById('publishBtn');
-  if (publishBtn) publishBtn.onclick = publishProduct;
-
-  const imgInput = document.getElementById('imgUpload');
-  if (imgInput) imgInput.onchange = previewImage;
-
   setTimeout(() => {
+    const path = window.location.pathname;
+
+    if (!path.includes('login.html') && !currentUser) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    if (currentUser) updateUserInfoDisplay();
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.onclick = logout;
+
+    if (path.includes('index.html') || path.endsWith('/')) {
+      loadAllProducts();
+    } else if (path.includes('profile.html')) {
+      loadMyProducts();
+    } else if (path.includes('detail.html')) {
+      loadProductDetail();
+    }
+
+    const publishBtn = document.getElementById('publishBtn');
+    if (publishBtn) publishBtn.onclick = publishProduct;
+
+    const imgInput = document.getElementById('imgUpload');
+    if (imgInput) imgInput.onchange = previewImage;
+
     const go = document.getElementById('goPublishBtn');
-    if (go) go.onclick = () => navigateTo('publish.html');
-  }, 100);
+    if (go) {
+      go.onclick = () => { window.location.href = 'publish.html'; };
+    }
+  }, 200);
 });
 
 function register(username, password, confirmPwd) {
@@ -50,18 +59,21 @@ function register(username, password, confirmPwd) {
 
 function login(username, password) {
   const user = users.find(u => u.username === username && u.password === password);
-  if (!user) { showToast('账号或密码错误'); return; }
+  if (!user) {
+    showToast('账号或密码错误');
+    return;
+  }
   currentUser = user;
   localStorage.setItem('xilankapu_current_user', JSON.stringify(currentUser));
   showToast('登录成功');
-  setTimeout(() => navigateTo('index.html'), 1000);
+  setTimeout(() => { window.location.href = 'index.html'; }, 1000);
 }
 
 function logout() {
   localStorage.removeItem('xilankapu_current_user');
   currentUser = null;
   showToast('已退出');
-  setTimeout(() => navigateTo('login.html'), 800);
+  setTimeout(() => { window.location.href = 'login.html'; }, 800);
 }
 
 function updateUserInfoDisplay() {
@@ -75,10 +87,12 @@ function loadAllProducts() {
   const list = document.getElementById('productList');
   if (!list) return;
   list.innerHTML = '';
+
   if (productData.length === 0) {
     list.innerHTML = '<div style="text-align:center;padding:50px 0;color:#999;">暂无作品，快来发布第一个吧～</div>';
     return;
   }
+
   productData.forEach(p => {
     const item = document.createElement('div');
     item.className = 'product-item';
@@ -91,7 +105,10 @@ function loadAllProducts() {
         <div class="product-desc">${p.desc}</div>
         <div class="product-author">作者：${p.author}</div>
       </div>`;
-    item.onclick = () => { localStorage.setItem('current_product_id', p.id); navigateTo('detail.html'); };
+    item.onclick = () => {
+      localStorage.setItem('current_product_id', p.id);
+      window.location.href = 'detail.html';
+    };
     list.appendChild(item);
   });
 }
@@ -101,15 +118,20 @@ function loadMyProducts() {
   if (!myList) return;
   const mine = productData.filter(p => p.authorUsername === currentUser.username);
   myList.innerHTML = '';
+
   if (mine.length === 0) {
     myList.innerHTML = '<div style="grid-column:1/3;text-align:center;padding:20px;color:#999;">暂无作品</div>';
     return;
   }
+
   mine.forEach(p => {
     const item = document.createElement('div');
     item.className = 'my-product-item';
     item.innerHTML = `<img class="my-product-img" src="${p.imgUrl}"><div class="my-product-name">${p.name}</div>`;
-    item.onclick = () => { localStorage.setItem('current_product_id', p.id); navigateTo('detail.html'); };
+    item.onclick = () => {
+      localStorage.setItem('current_product_id', p.id);
+      window.location.href = 'detail.html';
+    };
     myList.appendChild(item);
   });
 }
@@ -118,7 +140,11 @@ function loadProductDetail() {
   const c = document.getElementById('detailContainer');
   const id = localStorage.getItem('current_product_id');
   const p = productData.find(x => x.id === id);
-  if (!p) { showToast('作品不存在'); navigateBack(); return; }
+  if (!p) {
+    showToast('作品不存在');
+    window.history.back();
+    return;
+  }
   const mine = p.authorUsername === currentUser.username;
 
   c.innerHTML = `
@@ -141,10 +167,12 @@ function publishProduct() {
   const type = document.getElementById('patternType').value;
   const desc = document.getElementById('productDesc').value.trim();
   const img = document.getElementById('imgPreview');
+
   if (!name || !type || !img.src || img.src === '') {
     showToast('请完善信息并上传图片');
     return;
   }
+
   const newP = {
     id: Date.now().toString(),
     name, type, desc,
@@ -153,20 +181,19 @@ function publishProduct() {
     authorUsername: currentUser.username,
     createTime: Date.now()
   };
+
   productData.unshift(newP);
-  // 🔥 保存到全局共享存储
   localStorage.setItem('xilankapu_global_products', JSON.stringify(productData));
   showToast('发布成功！');
-  setTimeout(() => navigateTo('index.html'), 1000);
+  setTimeout(() => { window.location.href = 'index.html'; }, 1000);
 }
 
 function deleteProduct(id) {
   if (!confirm('确定要删除该作品吗？删除后无法恢复！')) return;
   productData = productData.filter(item => item.id !== id);
-  // 🔥 同步更新全局共享存储
   localStorage.setItem('xilankapu_global_products', JSON.stringify(productData));
   showToast('删除成功！');
-  navigateTo('profile.html');
+  window.location.href = 'profile.html';
 }
 
 function previewImage(e) {
@@ -182,10 +209,22 @@ function previewImage(e) {
   reader.readAsDataURL(file);
 }
 
-function collectProduct() { showToast('收藏成功！'); }
-function shareProduct() { showToast('分享成功！已复制链接'); }
-function navigateTo(p) { window.location.href = p; }
-function navigateBack() { window.history.back(); }
+function collectProduct() {
+  showToast('收藏成功！');
+}
+
+function shareProduct() {
+  showToast('分享成功！');
+}
+
+function switchForm() {
+  let loginForm = document.getElementById('loginForm');
+  let regForm = document.getElementById('regForm');
+  if (loginForm && regForm) {
+    loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+    regForm.style.display = regForm.style.display === 'none' ? 'block' : 'none';
+  }
+}
 
 function showToast(msg) {
   const t = document.createElement('div');

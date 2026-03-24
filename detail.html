@@ -6,7 +6,6 @@
   <title>作品详情 - 西兰卡普</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* 返回按钮样式 */
     .back-btn {
       position: fixed;
       top: 20px;
@@ -14,19 +13,19 @@
       background: #c92f2f;
       color: white;
       border: none;
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
-      z-index: 999;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 9999;
+      font-weight:bold;
     }
+    .btn-group{display:flex;gap:12px;margin-top:20px;}
   </style>
 </head>
 <body>
 
-  <!-- 🔥 这里就是返回主页按钮 -->
-  <button class="back-btn" onclick="location.href='index.html'">← 返回主页</button>
+<button class="back-btn" onclick="location.href='index.html'">← 返回主页</button>
 
   <div class="header">
     <h1>作品详情</h1>
@@ -34,17 +33,6 @@
 
   <div class="container">
     <div id="detailContainer"></div>
-  </div>
-
-  <div class="tab-bar">
-    <a href="index.html" class="tab-item">
-      <span class="icon">🏠</span>
-      <span>首页</span>
-    </a>
-    <a href="profile.html" class="tab-item">
-      <span class="icon">👤</span>
-      <span>我的</span>
-    </a>
   </div>
 
   <script src="script.js"></script>

@@ -3,25 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>发布文创 - 西兰卡普</title>
+  <title>发布作品 - 西兰卡普</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="header">
-    <h1>发布新文创作品</h1>
+    <h1>发布文创作品</h1>
   </div>
 
   <div class="container">
     <div class="form-box">
       <div class="form-item">
         <label class="label">作品名称</label>
-        <input type="text" id="productName" class="input" placeholder="请输入作品名称">
+        <input class="input" id="productName" placeholder="请输入作品名称">
       </div>
-
       <div class="form-item">
         <label class="label">纹样类型</label>
-        <select id="patternType" class="input">
-          <option value="">请选择纹样</option>
+        <select class="select" id="patternType">
           <option value="四十八勾">四十八勾</option>
           <option value="阳雀花">阳雀花</option>
           <option value="岩墙花">岩墙花</option>
@@ -29,20 +27,17 @@
           <option value="其他">其他</option>
         </select>
       </div>
-
       <div class="form-item">
-        <label class="label">作品描述</label>
-        <textarea id="productDesc" class="input" rows="4" placeholder="介绍作品寓意、工艺等"></textarea>
+        <label class="label">作品寓意</label>
+        <textarea class="textarea" id="productDesc" placeholder="请输入作品描述"></textarea>
       </div>
-
       <div class="form-item">
         <label class="label">上传图片</label>
         <input type="file" id="imgUpload" accept="image/*">
-        <img id="imgPreview" style="width:100%;max-width:300px;margin-top:10px;border-radius:8px;display:none;">
-        <div id="uploadTip" style="color:#999;font-size:12px;margin-top:6px;">请选择图片上传</div>
+        <img id="imgPreview" style="width:100%;margin-top:10px;display:none;border-radius:8px;">
+        <div id="uploadTip" style="margin-top:8px;color:#666;">请选择图片上传</div>
       </div>
-
-      <button id="publishBtn" class="btn primary-btn">发布作品</button>
+      <button class="btn primary-btn publish-btn" id="publishBtn">发布作品</button>
     </div>
   </div>
 

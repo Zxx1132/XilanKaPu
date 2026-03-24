@@ -3,90 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>登录 - 西兰卡普文创平台</title>
+  <title>登录 - 西兰卡普</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .login-container{max-width:400px;margin:60px auto;padding:20px;}
-    .login-card{background:#fff;border-radius:16px;padding:30px;box-shadow:0 5px 20px rgba(0,0,0,0.1);border:1px solid #f7d7a8;}
-    .login-title{text-align:center;font-size:26px;color:#c92f2f;margin-bottom:24px;font-weight:bold;}
-    .form-switch{text-align:center;margin:20px 0;font-size:14px;}
-    .form-switch span{color:#c92f2f;font-weight:bold;cursor:pointer;}
+    .login-box{max-width:400px;margin:50px auto;padding:20px;background:white;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+    .form-item{margin-bottom:16px;}
+    .form-item label{display:block;margin-bottom:8px;font-weight:bold;}
+    .form-item input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-size:16px;}
+    .btn{margin-top:10px;}
+    .switch-text{text-align:center;margin-top:16px;color:#666;cursor:pointer;}
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>西兰卡普文创平台</h1>
-  </div>
 
-  <div class="login-container">
-    <div class="login-card">
-      <div class="login-title">用户登录</div>
-
-      <div id="loginForm" class="form-box">
-        <div class="form-item">
-          <label class="label">用户名</label>
-          <input type="text" id="loginUsername" class="input" placeholder="请输入用户名">
-        </div>
-        <div class="form-item">
-          <label class="label">密码</label>
-          <input type="password" id="loginPassword" class="input" placeholder="请输入密码">
-        </div>
-        <button class="btn primary-btn" onclick="tryLogin()">登录</button>
-      </div>
-
-      <div id="registerForm" class="form-box" style="display:none;">
-        <div class="form-item">
-          <label class="label">用户名</label>
-          <input type="text" id="regUsername" class="input" placeholder="设置用户名">
-        </div>
-        <div class="form-item">
-          <label class="label">密码</label>
-          <input type="password" id="regPassword" class="input" placeholder="至少6位">
-        </div>
-        <div class="form-item">
-          <label class="label">确认密码</label>
-          <input type="password" id="regConfirmPwd" class="input" placeholder="再次输入密码">
-        </div>
-        <button class="btn primary-btn" onclick="tryRegister()">注册</button>
-      </div>
-
-      <div class="form-switch">
-        <span id="toRegister" onclick="switchForm()">没有账号？点击注册</span>
-        <span id="toLogin" onclick="switchForm()" style="display:none;">已有账号？点击登录</span>
-      </div>
-
-      <div style="text-align:center;font-size:12px;color:#999;margin-top:10px;">
-        测试账号：test / 123456
-      </div>
+<div class="login-box">
+  <div id="loginForm">
+    <h2 style="text-align:center;margin-bottom:20px;">登录</h2>
+    <div class="form-item">
+      <label>用户名</label>
+      <input type="text" id="loginUsername" placeholder="请输入用户名">
     </div>
+    <div class="form-item">
+      <label>密码</label>
+      <input type="password" id="loginPwd" placeholder="请输入密码">
+    </div>
+    <button class="btn primary-btn" onclick="doLogin()">登录</button>
+    <div class="switch-text" onclick="switchForm()">没有账号？去注册</div>
   </div>
 
-  <script>
-    function switchForm(){
-      let login=document.getElementById('loginForm');
-      let reg=document.getElementById('registerForm');
-      let t1=document.getElementById('toRegister');
-      let t2=document.getElementById('toLogin');
-      if(login.style.display!='none'){
-        login.style.display='none';reg.style.display='block';
-        t1.style.display='none';t2.style.display='inline';
-      }else{
-        reg.style.display='none';login.style.display='block';
-        t2.style.display='none';t1.style.display='inline';
-      }
-    }
-    function tryLogin(){
-      let u=document.getElementById('loginUsername').value.trim();
-      let p=document.getElementById('loginPassword').value.trim();
-      login(u,p);
-    }
-    function tryRegister(){
-      let u=document.getElementById('regUsername').value.trim();
-      let p=document.getElementById('regPassword').value.trim();
-      let cp=document.getElementById('regConfirmPwd').value.trim();
-      register(u,p,cp);
-    }
-  </script>
-  <script src="script.js"></script>
+  <div id="regForm" style="display:none;">
+    <h2 style="text-align:center;margin-bottom:20px;">注册</h2>
+    <div class="form-item">
+      <label>用户名</label>
+      <input type="text" id="regUsername" placeholder="请输入用户名">
+    </div>
+    <div class="form-item">
+      <label>密码</label>
+      <input type="password" id="regPwd" placeholder="请输入密码">
+    </div>
+    <div class="form-item">
+      <label>确认密码</label>
+      <input type="password" id="regConfirmPwd" placeholder="请再次输入密码">
+    </div>
+    <button class="btn primary-btn" onclick="doRegister()">注册</button>
+    <div class="switch-text" onclick="switchForm()">已有账号？去登录</div>
+  </div>
+</div>
+
+<script>
+function doLogin(){
+  let username = document.getElementById('loginUsername').value;
+  let pwd = document.getElementById('loginPwd').value;
+  login(username,pwd);
+}
+function doRegister(){
+  let username = document.getElementById('regUsername').value;
+  let pwd = document.getElementById('regPwd').value;
+  let confirm = document.getElementById('regConfirmPwd').value;
+  register(username,pwd,confirm);
+}
+</script>
+<script src="script.js"></script>
 </body>
 </html>
